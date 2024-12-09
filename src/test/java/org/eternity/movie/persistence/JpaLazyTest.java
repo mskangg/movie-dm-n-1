@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @DataJpaTest(showSql = false)
 public class JpaLazyTest {
 	@Autowired
@@ -75,4 +77,8 @@ public class JpaLazyTest {
 		em.find(Movie.class, movie.getId(), hints);
 	}
 
+    @Test
+    public void invalid_graph_name() {
+        assertThrows(IllegalArgumentException.class, () -> em.getEntityGraph("InvalidGraphName"));
+    }
 }
