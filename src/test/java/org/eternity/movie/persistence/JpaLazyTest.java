@@ -19,7 +19,7 @@ public class JpaLazyTest {
 	private EntityManager em;
 
 	@Test
-	public void dicount_policy_fetch() {
+	public void discount_policy_fetch() {
 		DiscountPolicy policy =
 				new AmountDiscountPolicy(Money.wons(1000),
 						Set.of(
@@ -55,6 +55,7 @@ public class JpaLazyTest {
 
 		em.find(Movie.class, movie.getId(), hints);
 	}
+
 	@Test
 	public void movie_load() {
 		Movie movie = new Movie("영화", 120, Money.wons(10000),

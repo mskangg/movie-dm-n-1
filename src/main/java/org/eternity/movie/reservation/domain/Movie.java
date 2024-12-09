@@ -34,9 +34,14 @@ public class Movie {
     private Integer runningTime;
     private Money fee;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="POLICY_ID")
     private DiscountPolicy discountPolicy;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "POLICY_PRICES", joinColumns = @JoinColumn(name="POLICY_ID"))
+    @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SELECT)
+    private Set<Money> prices = new HashSet<>();
 
     public Movie(String title, Integer runningTime, Money fee, DiscountPolicy discountPolicy) {
         this.title = title;
@@ -44,11 +49,6 @@ public class Movie {
         this.fee = fee;
         this.discountPolicy = discountPolicy;
     }
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "POLICY_PRICES", joinColumns = @JoinColumn(name="POLICY_ID"))
-    @org.hibernate.annotations.Fetch(org.hibernate.annotations.FetchMode.SELECT)
-    private Set<Money> prices = new HashSet<>();
 
     public Money getFee() {
         return fee;

@@ -3,9 +3,9 @@ package org.eternity.movie.reservation.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.eternity.movie.generic.Money;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NamedEntityGraphs(
