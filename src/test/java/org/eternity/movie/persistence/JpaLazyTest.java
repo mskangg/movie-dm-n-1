@@ -30,6 +30,20 @@ public class JpaLazyTest {
 		policies.stream().forEach(policy -> policy.getConditions().size());
 	}
 
+    @Test
+    public void default_batch_fetch_size_test() {
+        fixture().forEach(em::persist);
+        em.flush();
+        em.clear();
+
+        // default 옵션으로도 컨트롤 가능
+        em.setProperty("hibernate.default_batch_fetch_size", 2);
+
+        List<DiscountPolicy> policies = em.createQuery("select p from DiscountPolicy p", DiscountPolicy.class).getResultList();
+
+        policies.stream().forEach(policy -> policy.getConditions().size());
+    }
+
 	List<DiscountPolicy> fixture() {
 		return List.of(
 				new AmountDiscountPolicy(
